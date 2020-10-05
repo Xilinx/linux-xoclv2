@@ -46,3 +46,6 @@ dfl-afu-objs += dfl-afu-error.o
 
 # Drivers for FPGAs which implement DFL
 obj-$(CONFIG_FPGA_DFL_PCI)		+= dfl-pci.o
+
+obj-$(CONFIG_FPGA_ALVEO_XMGMT)		+= alveo/mgmt/
+obj-$(CONFIG_FPGA_ALVEO_LIB)		+= alveo/lib/

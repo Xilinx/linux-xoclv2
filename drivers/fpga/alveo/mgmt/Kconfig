@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Xilinx Alveo FPGA device configuration
+#
+
+config FPGA_ALVEO_XMGMT
+	tristate "Xilinx Alveo Management Driver"
+	select LIBFDT
+	depends on HWMON && PCI
+	help
+	  Xilinx Alveo FPGA PCIe device driver for Management Physical Function.

@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Xilinx Alveo FPGA device configuration
+#
+
+source "drivers/fpga/alveo/mgmt/Kconfig"
+source "drivers/fpga/alveo/lib/Kconfig"
