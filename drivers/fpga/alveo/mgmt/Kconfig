@@ -6,6 +6,7 @@
 config FPGA_ALVEO_XMGMT
 	tristate "Xilinx Alveo Management Driver"
 	select LIBFDT
+	select FPGA_ALVEO_LIB
 	depends on HWMON && PCI
 	help
 	  Xilinx Alveo FPGA PCIe device driver for Management Physical Function.
