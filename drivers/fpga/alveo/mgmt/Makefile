@@ -29,7 +29,7 @@ xmgmt-objs := xmgmt-root.o			\
 	   $(commondir)/xrt-root.o		\
 	   $(commondir)/xrt-metadata.o		\
 	   $(commondir)/xrt-xclbin.o            \
-	   $(fdt-o)
+#	   $(fdt-o)
 
 
 ccflags-y := -I$(FULL_ALVEO_PATH)/include \
