@@ -44,7 +44,7 @@ xrt-lib-objs := 			\
 	subdevs/xrt-clkfreq.o		\
 	subdevs/xrt-ucs.o		\
 	subdevs/xrt-calib.o            \
-	$(fdt-o)
+#	$(fdt-o)
 
 
 ccflags-y := -I$(FULL_ALVEO_PATH)/include \
