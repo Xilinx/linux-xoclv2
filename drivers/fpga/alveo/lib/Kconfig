@@ -5,7 +5,7 @@
 
 config FPGA_ALVEO_LIB
 	tristate "Xilinx Alveo Driver Library"
+	depends on HWMON && PCI 
 	select LIBFDT
-	depends on HWMON && PCI
 	help
 	  Xilinx Alveo FPGA PCIe device driver common library.
