@@ -1,4 +1,5 @@
 #include <linux/libfdt_env.h>
+#include <linux/export.h>
 #include "../scripts/dtc/libfdt/fdt.c"
 
 EXPORT_SYMBOL_GPL(fdt_next_node);

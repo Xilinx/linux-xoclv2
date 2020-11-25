@@ -1,4 +1,5 @@
 #include <linux/libfdt_env.h>
+#include <linux/export.h>
 #include "../scripts/dtc/libfdt/fdt_ro.c"
 
 EXPORT_SYMBOL_GPL(fdt_getprop_by_offset);
