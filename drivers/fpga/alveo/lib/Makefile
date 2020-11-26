@@ -8,15 +8,6 @@
 FULL_ALVEO_PATH=$(srctree)/$(src)/..
 FULL_DTC_PATH=$(srctree)/scripts/dtc/libfdt
 
-fdt-o := ../common/libfdt/fdt_addresses.o  \
-	../common/libfdt/fdt_empty_tree.o \
-	../common/libfdt/fdt.o  \
-	../common/libfdt/fdt_ro.o  \
-	../common/libfdt/fdt_rw.o \
-	../common/libfdt/fdt_strerror.o \
-	../common/libfdt/fdt_sw.o  \
-	../common/libfdt/fdt_wip.o
-
 obj-$(CONFIG_FPGA_ALVEO_LIB) := xrt-lib.o
 
 xrt-lib-objs := 			\
@@ -43,11 +34,9 @@ xrt-lib-objs := 			\
 	subdevs/xrt-clock.o		\
 	subdevs/xrt-clkfreq.o		\
 	subdevs/xrt-ucs.o		\
-	subdevs/xrt-calib.o            \
-#	$(fdt-o)
+	subdevs/xrt-calib.o
 
 
 ccflags-y := -I$(FULL_ALVEO_PATH)/include \
-	-I$(FULL_ALVEO_PATH)/include/uapi \
 	-I$(FULL_ALVEO_PATH)/common \
 	-I$(FULL_DTC_PATH)

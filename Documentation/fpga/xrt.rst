@@ -74,9 +74,10 @@ performs the following operations:
 
 1. Sanity check the xclbin contents
 2. Isolate the User partition
-3. Download the bitstream using the FPGA config engine
-4. Program the clocks driving the User partition
-5. De-isolate the User partition
+3. Download the bitstream using the FPGA config engine (ICAP)
+4. De-isolate the User partition
+5. Program the clocks (ClockWiz) driving the User partition
+6. Wait for memory controller (MIG) calibration
 
 `Platform Loading Overview <https://xilinx.github.io/XRT/master/html/platforms_partitions.html>`_
 provides more detailed information on platform loading.
@@ -374,7 +375,7 @@ Deployment Models
 Baremetal
 ---------
 
-In baremetal deployments both MPF and UPF are visible and accessible. xmgmt driver binds to
+In bare-metal deployments both MPF and UPF are visible and accessible. xmgmt driver binds to
 MPF. xmgmt driver operations are privileged and available to system administrator. The full
 stack is illustrated below::
 
@@ -411,7 +412,7 @@ Virtualized
 
 In virtualized deployments privileged MPF is assigned to host but unprivileged UPF
 is assigned to guest VM via PCIe pass-through. xmgmt driver in host binds to MPF.
-xmgmt driver operations are privileged and only accesible by hosting service provider.
+xmgmt driver operations are privileged and only accessible by hosting service provider.
 The full stack is illustrated below::
 
 
@@ -548,7 +549,7 @@ Ioctls exposed by xmgmt driver to user space are enumerated in the following tab
 xmgmt Driver Sysfs
 ------------------
 
-xmgmt driver exposes a rich set of sysfs interfaces. subsystem platform drivers
+xmgmt driver exposes a rich set of sysfs interfaces. Subsystem platform drivers
 export sysfs node for every platform instance.
 
 Every partition also exports its UUIDs. See below for examples::
@@ -562,6 +563,22 @@ hwmon
 
 xmgmt driver exposes standard hwmon interface to report voltage, current, temperature,
 power, etc. These can easily be viewed using *sensors* command line utility.
+
+
+mailbox
+-------
+
+xmgmt communicates with user physical function driver via HW mailbox. Mailbox opcodes
+are defined in ``mailbox_proto.h``. `Mailbox Inter-domain Communication Protocol
+<https://xilinx.github.io/XRT/master/html/mailbox.proto.html>`_ defines the full
+specification. xmgmt implements subset of the specification. It provides the following
+services to the UPF driver:
+
+1.  Responding to *are you there* request including determining if the two drivers are
+    running in the same OS domain
+2.  Provide sensor readings, loaded xclbin UUID, clock frequency, shell information, etc.
+3.  Perform PCIe hot reset
+4.  Download user compiled xclbin
 
 
 Platform Security Considerations
