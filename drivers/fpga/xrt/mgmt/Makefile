@@ -15,8 +15,7 @@ commondir := ../common
 xmgmt-objs := xmgmt-root.o			\
 	   xmgmt-main.o				\
 	   xmgmt-fmgr-drv.o      		\
-	   xmgmt-main-ulp.o			\
-	   xmgmt-main-mailbox.o			\
+	   xmgmt-main-region.o			\
 	   $(commondir)/xrt-root.o		\
 	   $(commondir)/xrt-metadata.o		\
 	   $(commondir)/xrt-xclbin.o
