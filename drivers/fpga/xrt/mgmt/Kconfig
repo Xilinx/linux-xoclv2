@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Xilinx XRT FPGA device configuration
+#
+
+config FPGA_XRT_XMGMT
+	tristate "Xilinx Alveo Management Driver"
+	depends on HWMON && PCI && FPGA_XRT_LIB
+	select LIBFDT
+	help
+	  XRT Alveo FPGA PCIe device driver for Management Physical Function.
