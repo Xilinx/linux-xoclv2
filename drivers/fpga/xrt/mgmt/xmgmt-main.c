@@ -356,10 +356,10 @@ static int xmgmt_create_blp(struct xmgmt_main *xmm)
 	}
 
 	rc = xleaf_create_group(xdev, dtb);
-	if (rc < 0)
+	if (rc < 0) {
 		xrt_err(xdev, "failed to create BLP group: %d", rc);
-	else
-		rc = 0;
+		goto failed;
+	}
 
 	WARN_ON(xmm->blp_interface_uuids);
 	rc = xrt_md_get_interface_uuids(&xdev->dev, dtb, 0, NULL);

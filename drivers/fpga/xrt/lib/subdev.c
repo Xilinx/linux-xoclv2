@@ -68,7 +68,10 @@ int xrt_subdev_root_request(struct xrt_device *self, u32 cmd, void *arg)
 	struct device *dev = DEV(self);
 	struct xrt_subdev_platdata *pdata = DEV_PDATA(self);
 
-	WARN_ON(!pdata->xsp_root_cb);
+	if (!pdata->xsp_root_cb) {
+		dev_err(dev, "invalid root callback");
+		return -EINVAL;
+	}
 	return (*pdata->xsp_root_cb)(dev->parent, pdata->xsp_root_cb_arg, cmd, arg);
 }
 
@@ -195,6 +198,11 @@ xrt_subdev_getres(struct device *parent, enum xrt_subdev_id id,
 				XRT_MD_PROP_BAR_IDX, (const void **)&bar_idx, NULL);
 		bar = bar_idx ? be32_to_cpu(*bar_idx) : 0;
 		xleaf_get_root_res(to_xrt_dev(parent), bar, &pci_res);
+		if (!pci_res) {
+			dev_err(parent, "Invalid bar defined %d", bar);
+			ret = -EINVAL;
+			goto failed;
+		}
 		(*res)[count2].start = pci_res->start + be64_to_cpu(bar_range[0]);
 		(*res)[count2].end = pci_res->start + be64_to_cpu(bar_range[0]) +
 			be64_to_cpu(bar_range[1]) - 1;
@@ -203,10 +211,7 @@ xrt_subdev_getres(struct device *parent, enum xrt_subdev_id id,
 		ret = request_resource(pci_res, *res + count2);
 		if (ret) {
 			dev_err(parent, "Conflict resource %pR\n", *res + count2);
-			vfree(*res);
-			*res_num = 0;
-			*res = NULL;
-			return ret;
+			goto failed;
 		}
 		release_resource(*res + count2);
 
@@ -223,6 +228,12 @@ xrt_subdev_getres(struct device *parent, enum xrt_subdev_id id,
 	*res_num = count2;
 
 	return 0;
+
+failed:
+	vfree(*res);
+	*res_num = 0;
+	*res = NULL;
+	return ret;
 }
 
 static inline enum xrt_dev_file_mode

@@ -273,6 +273,7 @@ static int get_freq(struct clock *clock, u16 *freq)
 
 	WARN_ON(!mutex_is_locked(&clock->clock_lock));
 
+	*freq = 0;
 	ret = regmap_read(clock->regmap, XRT_CLOCK_STATUS_REG, &val);
 	if (ret) {
 		CLOCK_ERR(clock, "read status failed %d", ret);
@@ -281,7 +282,6 @@ static int get_freq(struct clock *clock, u16 *freq)
 
 	if ((val & 0x1) == 0) {
 		CLOCK_ERR(clock, "clockwiz is busy %x", val);
-		*freq = 0;
 		return -EBUSY;
 	}
 
@@ -329,7 +329,7 @@ static int get_freq(struct clock *clock, u16 *freq)
 	mul0 *= 1000;
 	if (div0 == 0) {
 		CLOCK_ERR(clock, "clockwiz 0 divider");
-		return 0;
+		return -EINVAL;
 	}
 
 	input = mul0 * 100;
@@ -455,7 +455,7 @@ static int clock_verify_freq(struct clock *clock)
 {
 	u32 lookup_freq, clock_freq_counter, request_in_khz, tolerance;
 	int err = 0;
-	u16 freq;
+	u16 freq = 0;
 
 	mutex_lock(&clock->clock_lock);
 
