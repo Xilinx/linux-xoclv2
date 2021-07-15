@@ -10,10 +10,11 @@
 
 #include <linux/module.h>
 #include <linux/hwmon.h>
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xleaf.h>
 #include "xroot.h"
-#include "subdev_pool.h"
 #include "group.h"
-#include "metadata.h"
+#include "subdev_pool.h"
 
 #define xroot_err(xr, fmt, args...) dev_err((xr)->dev, "%s: " fmt, __func__, ##args)
 #define xroot_warn(xr, fmt, args...) dev_warn((xr)->dev, "%s: " fmt, __func__, ##args)
@@ -427,7 +428,7 @@ static void xroot_bringup_group_work(struct work_struct *work)
 		r = xleaf_call(xdev, XRT_GROUP_INIT_CHILDREN, NULL);
 		xroot_put_group(xr, xdev);
 		if (r == -EEXIST)
-			continue; /* Already brough up, nothing to do. */
+			continue; /* Already brought up, nothing to do. */
 		if (r)
 			atomic_inc(&xr->groups.bringup_failed_cnt);
 

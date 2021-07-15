@@ -216,6 +216,13 @@ config STM32_FMC2_EBI
 	  devices (like SRAM, ethernet adapters, FPGAs, LCD displays, ...) on
 	  SOCs containing the FMC2 External Bus Interface.
 
+config XRT_DDR_CALIB
+	tristate "Support for Xilinx Alveo DDR calibration controller"
+	depends on FPGA_XRT_LIB
+	help
+	  Selete this option to enable the Xilinx Alveo DDR calibration
+	  controller.
+
 source "drivers/memory/samsung/Kconfig"
 source "drivers/memory/tegra/Kconfig"
 

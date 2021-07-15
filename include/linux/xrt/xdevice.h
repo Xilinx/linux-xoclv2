@@ -74,7 +74,7 @@ struct xrt_dev_endpoints {
 /*
  * struct xrt_driver - represent a xrt device driver
  *
- * drv: driver model structure.
+ * driver: driver model structure.
  * id_table: pointer to table of device IDs the driver is interested in.
  *           { } member terminated.
  * probe: mandatory callback for device binding.
@@ -82,6 +82,7 @@ struct xrt_dev_endpoints {
  */
 struct xrt_driver {
 	struct device_driver driver;
+	const struct xrt_device_id *id_table;
 	u32 subdev_id;
 	struct xrt_dev_file_ops file_ops;
 	struct xrt_dev_endpoints *endpoints;
@@ -100,6 +101,13 @@ struct xrt_driver {
 
 #define to_xrt_dev(d) container_of(d, struct xrt_device, dev)
 #define to_xrt_drv(d) container_of(d, struct xrt_driver, driver)
+/*
+ * module_xrt_driver() - Helper macro for drivers that don't do
+ * anything special in module init/exit.
+ */
+#define module_xrt_driver(__xrt_driver)				\
+	module_driver(__xrt_driver, xrt_register_driver,	\
+		      xrt_unregister_driver)
 
 static inline void *xrt_get_drvdata(const struct xrt_device *xdev)
 {

@@ -11,15 +11,15 @@
 #include <linux/firmware.h>
 #include <linux/uaccess.h>
 #include <linux/slab.h>
-#include "xclbin-helper.h"
-#include "metadata.h"
-#include "xleaf.h"
+#include <linux/xrt/xclbin-helper.h>
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xleaf.h>
 #include <linux/xrt/xmgmt-ioctl.h>
-#include "xleaf/devctl.h"
-#include "xmgmt-main.h"
+#include <linux/xrt/xleaf/devctl.h>
+#include <linux/xrt/xleaf/icap.h>
+#include <linux/xrt/xleaf/axigate.h>
+#include <linux/xrt/xmgmt-main.h>
 #include "xrt-mgr.h"
-#include "xleaf/icap.h"
-#include "xleaf/axigate.h"
 #include "xmgmt.h"
 
 #define XMGMT_MAIN "xmgmt_main"
@@ -142,7 +142,7 @@ static ssize_t VBNV_show(struct device *dev, struct device_attribute *da, char *
 }
 static DEVICE_ATTR_RO(VBNV);
 
-/* logic uuid is the uuid uniquely identfy the partition */
+/* logic uuid is the uuid uniquely identify the partition */
 static ssize_t logic_uuids_show(struct device *dev, struct device_attribute *da, char *buf)
 {
 	struct xrt_device *xdev = to_xrt_dev(dev);

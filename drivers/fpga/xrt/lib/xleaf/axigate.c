@@ -13,9 +13,10 @@
 #include <linux/device.h>
 #include <linux/regmap.h>
 #include <linux/io.h>
-#include "metadata.h"
-#include "xleaf.h"
-#include "xleaf/axigate.h"
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xleaf.h>
+#include <linux/xrt/xleaf/axigate.h>
+#include "../lib-drv.h"
 
 #define XRT_AXIGATE "xrt_axigate"
 

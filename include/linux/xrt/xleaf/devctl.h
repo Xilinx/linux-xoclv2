@@ -9,7 +9,7 @@
 #ifndef _XRT_DEVCTL_H_
 #define _XRT_DEVCTL_H_
 
-#include "xleaf.h"
+#include <linux/xrt/xleaf.h>
 
 /*
  * DEVCTL driver leaf calls.

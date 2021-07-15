@@ -10,15 +10,15 @@
  *      David Zhang <davidzha@xilinx.com>
  */
 
-#include <linux/mod_devicetable.h>
+#include <linux/module.h>
 #include <linux/delay.h>
 #include <linux/device.h>
 #include <linux/regmap.h>
 #include <linux/io.h>
-#include "metadata.h"
-#include "xleaf.h"
-#include "xleaf/clock.h"
-#include "xleaf/clkfreq.h"
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xleaf.h>
+#include <linux/xrt/xleaf/clock.h>
+#include <linux/xrt/xleaf/clkfreq.h>
 
 /* XRT_CLOCK_MAX_NUM_CLOCKS should be a concept from XCLBIN_ in the future */
 #define XRT_CLOCK_MAX_NUM_CLOCKS	4
@@ -638,15 +638,26 @@ static struct xrt_dev_endpoints xrt_clock_endpoints[] = {
 	{ 0 },
 };
 
+static const struct xrt_device_id xrt_clock_ids[] = {
+	{ XRT_SUBDEV_CLOCK },
+	{ }
+};
+MODULE_DEVICE_TABLE(xrt, xrt_clock_ids);
+
 static struct xrt_driver xrt_clock_driver = {
 	.driver = {
 		.name = XRT_CLOCK,
+		.owner = THIS_MODULE,
 	},
+	.id_table = xrt_clock_ids,
 	.subdev_id = XRT_SUBDEV_CLOCK,
 	.endpoints = xrt_clock_endpoints,
 	.probe = clock_probe,
 	.remove = clock_remove,
 	.leaf_call = xrt_clock_leaf_call,
 };
+module_xrt_driver(xrt_clock_driver);
 
-XRT_LEAF_INIT_FINI_FUNC(clock);
+MODULE_AUTHOR("XRT Team <runtime@xilinx.com>");
+MODULE_DESCRIPTION("Xilinx XRT clock driver");
+MODULE_LICENSE("GPL v2");

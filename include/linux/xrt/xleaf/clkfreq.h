@@ -9,7 +9,7 @@
 #ifndef _XRT_CLKFREQ_H_
 #define _XRT_CLKFREQ_H_
 
-#include "xleaf.h"
+#include <linux/xrt/xleaf.h>
 
 /*
  * CLKFREQ driver leaf calls.

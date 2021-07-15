@@ -838,4 +838,9 @@ struct mhi_device_id {
 	kernel_ulong_t driver_data;
 };
 
+struct xrt_device_id {
+	__u32 dev_id;
+	kernel_ulong_t driver_data;
+};
+
 #endif /* LINUX_MOD_DEVICETABLE_H */

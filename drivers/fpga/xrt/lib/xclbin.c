@@ -10,8 +10,8 @@
 #include <asm/errno.h>
 #include <linux/vmalloc.h>
 #include <linux/device.h>
-#include "xclbin-helper.h"
-#include "metadata.h"
+#include <linux/xrt/xclbin-helper.h>
+#include <linux/xrt/metadata.h>
 
 /* Used for parsing bitstream header */
 #define BITSTREAM_EVEN_MAGIC_BYTE	0x0f

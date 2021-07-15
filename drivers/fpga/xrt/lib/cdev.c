@@ -8,7 +8,7 @@
  *	Cheng Zhen <maxz@xilinx.com>
  */
 
-#include "xleaf.h"
+#include <linux/xrt/xleaf.h>
 #include "lib-drv.h"
 
 #define XRT_CDEV_DIR		"xrt"

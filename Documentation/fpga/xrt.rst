@@ -275,7 +275,7 @@ fpga_bridge and fpga_region for the next region in the chain.
 fpga_bridge
 -----------
 
-Like the fpga_region, a fpga_bridge is created by walking the device tree
+Like the fpga_region, an fpga_bridge is created by walking the device tree
 of the parent group. The bridge is used for isolation between a parent and
 its child.
 
@@ -416,7 +416,7 @@ xclbin is compiled by end user using
 `Vitis <https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html>`_
 tool set from Xilinx. The xclbin contains sections describing user compiled
 acceleration engines/kernels, memory subsystems, clocking information etc. It also
-contains a FPGA bitstream for the user partition, UUIDs, platform name, etc.
+contains an FPGA bitstream for the user partition, UUIDs, platform name, etc.
 
 
 .. _xsabin_xclbin_container_format:

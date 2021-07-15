@@ -8,10 +8,11 @@
  *      Lizhi Hou<Lizhi.Hou@xilinx.com>
  */
 
+#include <linux/module.h>
 #include <linux/regmap.h>
-#include "metadata.h"
-#include "xdevice.h"
-#include "xleaf.h"
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xdevice.h>
+#include <linux/xrt/xleaf.h>
 
 #define XRT_VSEC "xrt_vsec"
 
@@ -358,15 +359,26 @@ static struct xrt_dev_endpoints xrt_vsec_endpoints[] = {
 	{ 0 },
 };
 
+static const struct xrt_device_id xrt_vsec_ids[] = {
+	{ XRT_SUBDEV_VSEC },
+	{ }
+};
+MODULE_DEVICE_TABLE(xrt, xrt_vsec_ids);
+
 static struct xrt_driver xrt_vsec_driver = {
 	.driver = {
 		.name = XRT_VSEC,
+		.owner = THIS_MODULE,
 	},
+	.id_table = xrt_vsec_ids,
 	.subdev_id = XRT_SUBDEV_VSEC,
 	.endpoints = xrt_vsec_endpoints,
 	.probe = xrt_vsec_probe,
 	.remove = xrt_vsec_remove,
 	.leaf_call = xrt_vsec_leaf_call,
 };
+module_xrt_driver(xrt_vsec_driver);
 
-XRT_LEAF_INIT_FINI_FUNC(vsec);
+MODULE_AUTHOR("XRT Team <runtime@xilinx.com>");
+MODULE_DESCRIPTION("Xilinx XRT VSEC driver");
+MODULE_LICENSE("GPL v2");

@@ -13,11 +13,11 @@
 #include <linux/module.h>
 #include <linux/vmalloc.h>
 
-#include "xclbin-helper.h"
-#include "xleaf.h"
+#include <linux/xrt/xclbin-helper.h>
+#include <linux/xrt/xleaf.h>
+#include <linux/xrt/xleaf/axigate.h>
+#include <linux/xrt/xleaf/icap.h>
 #include "xrt-mgr.h"
-#include "xleaf/axigate.h"
-#include "xleaf/icap.h"
 #include "xmgmt.h"
 
 struct xfpga_class {
@@ -115,7 +115,7 @@ static int xmgmt_pr_write_init(struct fpga_manager *mgr,
 }
 
 /*
- * The implementation requries full xclbin image before we can start
+ * The implementation requires full xclbin image before we can start
  * programming the hardware via ICAP subsystem. The full image is required
  * for checking the validity of xclbin and walking the sections to
  * discover the bitstream.

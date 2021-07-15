@@ -2166,5 +2166,19 @@ config MFD_INTEL_M10_BMC
 	  additional drivers must be enabled in order to use the functionality
 	  of the device.
 
+config XRT_DEVCTL
+	tristate "Xilinx Alveo generic IO read and write driver"
+	depends on FPGA_XRT_LIB
+	help
+	  Select this option to enable XRT devctl driver. This driver provides
+	  common support for read and write registers for Xilinx Alveo FPGA.
+
+config XRT_VSEC
+	tristate "Xilinx Alveo VSEC driver"
+	depends on FPGA_XRT_LIB
+	help
+	  Select this option to enable XRT VSEC driver. This driver provides
+	  support for read and parse VSEC information for Xilinx Alveo FPGA.
+
 endmenu
 endif

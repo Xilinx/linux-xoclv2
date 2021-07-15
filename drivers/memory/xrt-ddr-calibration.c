@@ -9,11 +9,13 @@
  * Authors:
  *      Lizhi Hou<Lizhi.Hou@xilinx.com>
  */
+#include <linux/module.h>
 #include <linux/delay.h>
 #include <linux/regmap.h>
-#include "xclbin-helper.h"
-#include "metadata.h"
-#include "xleaf/ddr_calibration.h"
+#include <linux/xrt/xclbin-helper.h>
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xleaf.h>
+#include <linux/xrt/xleaf/ddr_calibration.h>
 
 #define XRT_CALIB	"xrt_calib"
 
@@ -196,10 +198,18 @@ static struct xrt_dev_endpoints xrt_calib_endpoints[] = {
 	{ 0 },
 };
 
+static const struct xrt_device_id xrt_calib_ids[] = {
+        { XRT_SUBDEV_CALIB },
+        { }
+};
+MODULE_DEVICE_TABLE(xrt, xrt_calib_ids);
+
 static struct xrt_driver xrt_calib_driver = {
 	.driver = {
 		.name = XRT_CALIB,
+		.owner = THIS_MODULE,
 	},
+	.id_table = xrt_calib_ids,
 	.subdev_id = XRT_SUBDEV_CALIB,
 	.endpoints = xrt_calib_endpoints,
 	.probe = xrt_calib_probe,
@@ -207,4 +217,8 @@ static struct xrt_driver xrt_calib_driver = {
 	.leaf_call = xrt_calib_leaf_call,
 };
 
-XRT_LEAF_INIT_FINI_FUNC(calib);
+module_xrt_driver(xrt_calib_driver);
+
+MODULE_AUTHOR("XRT Team <runtime@xilinx.com>");
+MODULE_DESCRIPTION("Xilinx XRT DDR calibration controller driver");
+MODULE_LICENSE("GPL v2");

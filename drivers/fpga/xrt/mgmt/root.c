@@ -13,10 +13,9 @@
 #include <linux/aer.h>
 #include <linux/vmalloc.h>
 #include <linux/delay.h>
-
+#include <linux/xrt/metadata.h>
 #include "xroot.h"
 #include "xmgmt.h"
-#include "metadata.h"
 
 #define XMGMT_MODULE_NAME	"xrt-mgmt"
 #define XMGMT_DRIVER_VERSION	"4.0.0"

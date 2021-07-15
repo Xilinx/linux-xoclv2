@@ -17,14 +17,8 @@ xrt-lib-objs :=			\
 	subdev.o		\
 	cdev.o			\
 	group.o			\
-	xleaf/vsec.o		\
 	xleaf/axigate.o		\
-	xleaf/devctl.o		\
-	xleaf/icap.o		\
-	xleaf/clock.o		\
-	xleaf/clkfreq.o		\
-	xleaf/ucs.o		\
-	xleaf/ddr_calibration.o
+	xleaf/icap.o
 
 ccflags-y := -I$(FULL_XRT_PATH)/include	 \
 	-I$(FULL_DTC_PATH)

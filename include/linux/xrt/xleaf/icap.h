@@ -9,7 +9,7 @@
 #ifndef _XRT_ICAP_H_
 #define _XRT_ICAP_H_
 
-#include "xleaf.h"
+#include <linux/xrt/xleaf.h>
 
 /*
  * ICAP driver leaf calls.

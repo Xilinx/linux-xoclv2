@@ -9,10 +9,11 @@
  */
 
 #include <linux/mod_devicetable.h>
-#include "xleaf.h"
-#include "subdev_pool.h"
+#include <linux/kmod.h>
+#include <linux/xrt/xleaf.h>
+#include <linux/xrt/metadata.h>
 #include "group.h"
-#include "metadata.h"
+#include "subdev_pool.h"
 #include "lib-drv.h"
 
 #define XRT_GRP "xrt_group"
@@ -136,6 +137,9 @@ static int xrt_grp_create_leaves(struct xrt_group *xg)
 	xrt_info(xg->xdev, "bringing up leaves...");
 	memcpy(grp_dtb, pdata->xsp_dtb, mlen);
 	for (did = 0; did < XRT_SUBDEV_NUM; did++) {
+		ret = xrt_drv_get(did);
+		if (ret)
+			continue;
 		eps = xrt_drv_get_endpoints(did);
 		while (eps && eps->xse_names) {
 			char *dtb = NULL;
@@ -169,6 +173,7 @@ static int xrt_grp_create_leaves(struct xrt_group *xg)
 			vfree(dtb);
 			/* Continue searching for the same instance from grp_dtb. */
 		}
+		xrt_drv_put(did);
 	}
 
 	xg->leaves_created = true;

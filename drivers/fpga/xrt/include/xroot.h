@@ -9,13 +9,10 @@
 #ifndef _XRT_ROOT_H_
 #define _XRT_ROOT_H_
 
-#include "xdevice.h"
-#include "subdev_id.h"
-#include "events.h"
-
-typedef bool (*xrt_subdev_match_t)(enum xrt_subdev_id, struct xrt_device *, void *);
-#define XRT_SUBDEV_MATCH_PREV	((xrt_subdev_match_t)-1)
-#define XRT_SUBDEV_MATCH_NEXT	((xrt_subdev_match_t)-2)
+#include <linux/xrt/xdevice.h>
+#include <linux/xrt/subdev_id.h>
+#include <linux/xrt/events.h>
+#include <linux/xrt/xleaf.h>
 
 /*
  * Root calls.

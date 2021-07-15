@@ -9,7 +9,7 @@
 #ifndef _XRT_DDR_CALIBRATION_H_
 #define _XRT_DDR_CALIBRATION_H_
 
-#include "xleaf.h"
+#include <linux/xrt/xleaf.h>
 #include <linux/xrt/xclbin.h>
 
 /*

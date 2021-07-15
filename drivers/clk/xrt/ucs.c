@@ -8,14 +8,14 @@
  *      Lizhi Hou<Lizhi.Hou@xilinx.com>
  */
 
-#include <linux/mod_devicetable.h>
+#include <linux/module.h>
 #include <linux/delay.h>
 #include <linux/device.h>
 #include <linux/regmap.h>
 #include <linux/io.h>
-#include "metadata.h"
-#include "xleaf.h"
-#include "xleaf/clock.h"
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xleaf.h>
+#include <linux/xrt/xleaf/clock.h>
 
 #define UCS_ERR(ucs, fmt, arg...)   \
 	xrt_err((ucs)->xdev, fmt "\n", ##arg)
@@ -139,14 +139,26 @@ static struct xrt_dev_endpoints xrt_ucs_endpoints[] = {
 	{ 0 },
 };
 
+static const struct xrt_device_id xrt_ucs_ids[] = {
+	{ XRT_SUBDEV_UCS },
+	{ }
+};
+MODULE_DEVICE_TABLE(xrt, xrt_ucs_ids);
+
 static struct xrt_driver xrt_ucs_driver = {
 	.driver = {
 		.name = XRT_UCS,
+		.owner = THIS_MODULE,
 	},
+	.id_table = xrt_ucs_ids,
 	.subdev_id = XRT_SUBDEV_UCS,
 	.endpoints = xrt_ucs_endpoints,
 	.probe = ucs_probe,
 	.leaf_call = xrt_ucs_leaf_call,
 };
 
-XRT_LEAF_INIT_FINI_FUNC(ucs);
+module_xrt_driver(xrt_ucs_driver);
+
+MODULE_AUTHOR("XRT Team <runtime@xilinx.com>");
+MODULE_DESCRIPTION("Xilinx XRT user clock subsystem controller driver");
+MODULE_LICENSE("GPL v2");

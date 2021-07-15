@@ -8,14 +8,14 @@
  *      Lizhi Hou<Lizhi.Hou@xilinx.com>
  */
 
-#include <linux/mod_devicetable.h>
+#include <linux/module.h>
 #include <linux/delay.h>
 #include <linux/device.h>
 #include <linux/regmap.h>
 #include <linux/io.h>
-#include "metadata.h"
-#include "xleaf.h"
-#include "xleaf/clkfreq.h"
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xleaf.h>
+#include <linux/xrt/xleaf/clkfreq.h>
 
 #define CLKFREQ_ERR(clkfreq, fmt, arg...)   \
 	xrt_err((clkfreq)->xdev, fmt "\n", ##arg)
@@ -209,15 +209,26 @@ static struct xrt_dev_endpoints xrt_clkfreq_endpoints[] = {
 	{ 0 },
 };
 
+static const struct xrt_device_id xrt_clkfreq_ids[] = {
+	{ XRT_SUBDEV_CLKFREQ },
+	{ }
+};
+MODULE_DEVICE_TABLE(xrt, xrt_clkfreq_ids);
+
 static struct xrt_driver xrt_clkfreq_driver = {
 	.driver = {
 		.name = XRT_CLKFREQ,
+		.owner = THIS_MODULE,
 	},
+	.id_table = xrt_clkfreq_ids,
 	.subdev_id = XRT_SUBDEV_CLKFREQ,
 	.endpoints = xrt_clkfreq_endpoints,
 	.probe = clkfreq_probe,
 	.remove = clkfreq_remove,
 	.leaf_call = xrt_clkfreq_leaf_call,
 };
+module_xrt_driver(xrt_clkfreq_driver);
 
-XRT_LEAF_INIT_FINI_FUNC(clkfreq);
+MODULE_AUTHOR("XRT Team <runtime@xilinx.com>");
+MODULE_DESCRIPTION("Xilinx XRT clock frequency counter driver");
+MODULE_LICENSE("GPL v2");

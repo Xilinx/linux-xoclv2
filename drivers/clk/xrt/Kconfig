@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-2.0
+
+config XRT_CLK_WIZ
+	tristate "Clock driver for Xilinx Alveo clocking wizard"
+	depends on FPGA_XRT_LIB
+	select XRT_CLK_FREQ
+	select XRT_CLK_UCS
+	help
+	  Select this option to enable the Alveo clock controller driver.
+
+config XRT_CLK_FREQ
+	tristate "Driver for Xilinx Alveo clock frequency counter"
+	depends on FPGA_XRT_LIB
+	depends on XRT_CLK_WIZ
+	help
+	  Select this option to enable the Alveo clock frequency counter driver.
+
+config XRT_CLK_UCS
+	tristate "Driver for Xilinx Alveo user clock subsystem controller"
+	depends on FPGA_XRT_LIB
+	depends on XRT_CLK_WIZ
+	help
+	  Select this option to enable the Alveo user clock subsystem controller driver.

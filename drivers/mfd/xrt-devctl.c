@@ -8,14 +8,14 @@
  *      Lizhi Hou<Lizhi.Hou@xilinx.com>
  */
 
-#include <linux/mod_devicetable.h>
+#include <linux/module.h>
 #include <linux/delay.h>
 #include <linux/device.h>
 #include <linux/regmap.h>
 #include <linux/io.h>
-#include "metadata.h"
-#include "xleaf.h"
-#include "xleaf/devctl.h"
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xdevice.h>
+#include <linux/xrt/xleaf/devctl.h>
 
 #define XRT_DEVCTL "xrt_devctl"
 
@@ -156,14 +156,25 @@ static struct xrt_dev_endpoints xrt_devctl_endpoints[] = {
 	{ 0 },
 };
 
+static const struct xrt_device_id xrt_devctl_ids[] = {
+	{ XRT_SUBDEV_DEVCTL },
+	{ }
+};
+MODULE_DEVICE_TABLE(xrt, xrt_devctl_ids);
+
 static struct xrt_driver xrt_devctl_driver = {
 	.driver = {
 		.name = XRT_DEVCTL,
+		.owner = THIS_MODULE,
 	},
+	.id_table = xrt_devctl_ids,
 	.subdev_id = XRT_SUBDEV_DEVCTL,
 	.endpoints = xrt_devctl_endpoints,
 	.probe = xrt_devctl_probe,
 	.leaf_call = xrt_devctl_leaf_call,
 };
+module_xrt_driver(xrt_devctl_driver);
 
-XRT_LEAF_INIT_FINI_FUNC(devctl);
+MODULE_AUTHOR("XRT Team <runtime@xilinx.com>");
+MODULE_DESCRIPTION("Xilinx XRT devctl driver");
+MODULE_LICENSE("GPL v2");

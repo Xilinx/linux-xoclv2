@@ -13,7 +13,6 @@
 #include <linux/mod_devicetable.h>
 #include "xdevice.h"
 #include "subdev_id.h"
-#include "xroot.h"
 #include "events.h"
 
 /* All subdev drivers should use below common routines to print out msg. */
@@ -70,7 +69,7 @@ struct xrt_subdev_platdata {
 	 * Per driver instance callback. The xdev points to the instance.
 	 * Should always be defined for subdev driver to get service from root.
 	 */
-	xrt_subdev_root_cb_t xsp_root_cb;
+	void *xsp_root_cb;
 	void *xsp_root_cb_arg;
 
 	/* Something to associate w/ root for msg printing. */
@@ -109,6 +108,10 @@ struct subdev_match_arg {
 	enum xrt_subdev_id id;
 	int instance;
 };
+
+typedef bool (*xrt_subdev_match_t)(enum xrt_subdev_id, struct xrt_device *, void *);
+#define XRT_SUBDEV_MATCH_PREV   ((xrt_subdev_match_t)-1)
+#define XRT_SUBDEV_MATCH_NEXT   ((xrt_subdev_match_t)-2)
 
 bool xleaf_has_endpoint(struct xrt_device *xdev, const char *endpoint_name);
 struct xrt_device *xleaf_get_leaf(struct xrt_device *xdev,
@@ -180,26 +183,5 @@ void xleaf_devnode_destroy(struct xrt_device *xdev);
 struct xrt_device *xleaf_devnode_open_excl(struct inode *inode);
 struct xrt_device *xleaf_devnode_open(struct inode *inode);
 void xleaf_devnode_close(struct inode *inode);
-
-/* Module's init/fini routines for leaf driver in xrt-lib module */
-#define XRT_LEAF_INIT_FINI_FUNC(name)					\
-void name##_leaf_init_fini(bool init)					\
-{									\
-	if (init)							\
-		xrt_register_driver(&xrt_##name##_driver);		\
-	else								\
-		xrt_unregister_driver(&xrt_##name##_driver);		\
-}
-
-/* Module's init/fini routines for leaf driver in xrt-lib module */
-void group_leaf_init_fini(bool init);
-void vsec_leaf_init_fini(bool init);
-void devctl_leaf_init_fini(bool init);
-void axigate_leaf_init_fini(bool init);
-void icap_leaf_init_fini(bool init);
-void calib_leaf_init_fini(bool init);
-void clkfreq_leaf_init_fini(bool init);
-void clock_leaf_init_fini(bool init);
-void ucs_leaf_init_fini(bool init);
 
 #endif	/* _XRT_LEAF_H_ */

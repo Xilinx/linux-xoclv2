@@ -11,10 +11,10 @@
 #include <linux/fpga/fpga-bridge.h>
 #include <linux/fpga/fpga-region.h>
 #include <linux/slab.h>
-#include "metadata.h"
-#include "xleaf.h"
-#include "xleaf/axigate.h"
-#include "xclbin-helper.h"
+#include <linux/xrt/metadata.h>
+#include <linux/xrt/xleaf.h>
+#include <linux/xrt/xleaf/axigate.h>
+#include <linux/xrt/xclbin-helper.h>
 #include "xmgmt.h"
 
 struct xmgmt_bridge {

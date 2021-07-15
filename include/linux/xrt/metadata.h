@@ -194,7 +194,7 @@ int xrt_md_get_interface_uuids(struct device *dev, const char *blob,
 /*
  * The firmware provides a 128 bit hash string as a unique id to the
  * partition/interface.
- * Existing hw does not yet use the cononical form, so it is necessary to
+ * Existing hw does not yet use the canonical form, so it is necessary to
  * use a translation function.
  */
 static inline void xrt_md_trans_uuid2str(const uuid_t *uuid, char *uuidstr)
