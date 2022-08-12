@@ -745,6 +745,17 @@ config XILINX_ZYNQMP_DPDMA
 	  driver provides the dmaengine required by the DisplayPort subsystem
 	  display driver.
 
+config XILINX_QDMA
+	tristate "Xilinx QDMA Subsystem DMA Engine"
+	select DMA_ENGINE
+	select DMA_VIRTUAL_CHANNELS
+	select REGMAP_MMIO
+	help
+	  Enable support for Xilinx QDMA Subsystem DMA Engine. The
+	  Queue-based Direct Memory Access (QDMA) subsystem is a PCI
+	  Express based DMA engine that is optimized for both high
+	  bandwidth and high packet count data transfers.
+
 # driver files
 source "drivers/dma/bestcomm/Kconfig"
 
